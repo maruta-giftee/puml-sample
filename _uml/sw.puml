@@ -1,0 +1,55 @@
+@startuml Team
+
+title チーム移動
+
+actor CLI <<user>>
+participant Go <<Application>>
+participant Member
+participant Skill
+participant Jedi <<type: Team>>
+participant Sith <<type: Team>>
+
+CLI -> Go : go run
+
+activate Go
+
+create Jedi
+Go -> Jedi : &Team{Name: "Jedi"}
+activate Jedi
+
+create Sith
+Go -> Sith : &Team{Name: "Sith"}
+activate Sith
+
+group crate member
+  Go -> Member : &Member{ Name: "Master Yoda", Age: 800, *Skill }
+  activate Member
+  Skill -> Member : get yoda's skill set
+  Go <- Member : value: yoda
+  deactivate Member
+
+  Go -> Member : &Member{ Name: "Anakin Skywalker", Age: 19, *Skill }
+  activate Member
+  Skill -> Member : get anakin's skill set
+  Go <- Member : value: anakin
+  deactivate Member
+
+  Go -> Member : &Member{ Name: "Luke Skywalker", Age: 19, *Skill }
+  activate Member
+  Skill -> Member : get luke's skill set
+  Go <- Member : value: luke
+  deactivate Member
+end
+group episode 1
+  Go -> Jedi : jedi.AddMember(yoda)
+  Go -> Jedi : jedi.AddMember(anakin)
+end
+group episode 3
+  Go -> Jedi : jedi.RemoveMember(anakin)
+  Go -> Sith : sith.AddMember(anakin)
+end
+group episode 4
+  Go -> Jedi : jedi.AddMember(luke)
+end
+
+@enduml
