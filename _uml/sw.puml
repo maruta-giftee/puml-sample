@@ -5,7 +5,6 @@ title チーム移動
 actor CLI <<user>>
 participant Go <<Application>>
 participant Member
-participant Skill
 participant Jedi <<type: Team>>
 participant Sith <<type: Team>>
 
@@ -22,26 +21,29 @@ Go -> Sith : &Team{Name: "Sith"}
 activate Sith
 
 group crate member
-  Go -> Member : &Member{ Name: "Master Yoda", Age: 800, *Skill }
+  Go -> Member : &Member{ Name: "Master Yoda", Age: 800}
   activate Member
-  Skill -> Member : get yoda's skill set
   Go <- Member : value: yoda
   deactivate Member
 
-  Go -> Member : &Member{ Name: "Anakin Skywalker", Age: 19, *Skill }
+  Go -> Member : &Member{ Name: "Obi-Wan Kenobi", Age: 25}
   activate Member
-  Skill -> Member : get anakin's skill set
+  Go <- Member : value: obiwan
+  deactivate Member
+
+  Go -> Member : &Member{ Name: "Anakin Skywalker", Age: 19}
+  activate Member
   Go <- Member : value: anakin
   deactivate Member
 
-  Go -> Member : &Member{ Name: "Luke Skywalker", Age: 19, *Skill }
+  Go -> Member : &Member{ Name: "Luke Skywalker", Age: 19}
   activate Member
-  Skill -> Member : get luke's skill set
   Go <- Member : value: luke
   deactivate Member
 end
 group episode 1
   Go -> Jedi : jedi.AddMember(yoda)
+  Go -> Jedi : jedi.AddMember(obiwan)
   Go -> Jedi : jedi.AddMember(anakin)
 end
 group episode 3
@@ -49,6 +51,7 @@ group episode 3
   Go -> Sith : sith.AddMember(anakin)
 end
 group episode 4
+  Go -> Jedi : jedi.RemoveMember(obiwan)
   Go -> Jedi : jedi.AddMember(luke)
 end
 
